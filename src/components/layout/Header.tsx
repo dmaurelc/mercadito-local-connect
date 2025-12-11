@@ -49,8 +49,12 @@ const Header = () => {
           <Button variant="ghost" size="icon">
             <Search className="h-5 w-5" />
           </Button>
-          <Button variant="outline">Ingresar</Button>
-          <Button>Registrar Negocio</Button>
+          <Link to="/ingresar">
+            <Button variant="outline">Ingresar</Button>
+          </Link>
+          <Link to="/registrar">
+            <Button>Registrar Negocio</Button>
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -79,10 +83,14 @@ const Header = () => {
               </Link>
             ))}
             <hr className="my-2 border-border" />
-            <Button variant="outline" className="w-full">
-              Ingresar
-            </Button>
-            <Button className="w-full">Registrar Negocio</Button>
+            <Link to="/ingresar" onClick={() => setIsMenuOpen(false)}>
+              <Button variant="outline" className="w-full">
+                Ingresar
+              </Button>
+            </Link>
+            <Link to="/registrar" onClick={() => setIsMenuOpen(false)}>
+              <Button className="w-full">Registrar Negocio</Button>
+            </Link>
           </nav>
         </div>
       )}
