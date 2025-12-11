@@ -7,7 +7,7 @@ const HeroSection = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <section className="relative min-h-[90vh] overflow-hidden">
+    <section className="relative min-h-[85vh] overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
@@ -15,12 +15,11 @@ const HeroSection = () => {
           alt="Mercado local vibrante"
           className="h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/60 to-foreground/40" />
-        <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-foreground/90 via-foreground/70 to-transparent" />
       </div>
 
       {/* Content */}
-      <div className="container relative z-10 flex min-h-[90vh] items-center py-20">
+      <div className="container relative z-10 flex min-h-[85vh] items-center py-20">
         <div className="max-w-2xl space-y-8">
           {/* Badge */}
           <div className="inline-flex animate-fade-up items-center gap-2 rounded-full border border-primary-foreground/20 bg-primary-foreground/10 px-4 py-2 backdrop-blur-sm">
@@ -81,9 +80,6 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-
-      {/* Decorative Elements */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
     </section>
   );
 };
