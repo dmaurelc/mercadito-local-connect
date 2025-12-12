@@ -1,176 +1,215 @@
-import { Star, MapPin, Clock, ArrowRight } from "lucide-react";
+import { Star, MapPin, Clock, Heart, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const businesses = [
   {
     id: 1,
     name: "La Panadería de María",
     category: "Gastronomía",
-    description: "Pan artesanal recién horneado todos los días. Especialidad en pan de masa madre.",
+    description: "Pan artesanal recién horneado todos los días",
     rating: 4.9,
     reviews: 128,
     location: "Centro",
-    hours: "6:00 AM - 8:00 PM",
+    deliveryTime: "15-25 min",
     image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=300&fit=crop",
-    featured: true,
+    isOpen: true,
+    promo: "🔥 Popular",
   },
   {
     id: 2,
     name: "Artesanías del Sol",
     category: "Artesanías",
-    description: "Productos hechos a mano con materiales locales. Joyería, cerámica y textiles.",
+    description: "Productos hechos a mano con materiales locales",
     rating: 4.8,
     reviews: 89,
     location: "Barrio Norte",
-    hours: "10:00 AM - 7:00 PM",
+    deliveryTime: "30-45 min",
     image: "https://images.unsplash.com/photo-1528396518501-b53b655eb9b3?w=400&h=300&fit=crop",
-    featured: true,
+    isOpen: true,
+    promo: null,
   },
   {
     id: 3,
     name: "TechFix Express",
     category: "Tecnología",
-    description: "Reparación de celulares, computadoras y tablets. Servicio rápido y garantizado.",
+    description: "Reparación de celulares y tablets",
     rating: 4.7,
     reviews: 156,
     location: "Centro",
-    hours: "9:00 AM - 6:00 PM",
+    deliveryTime: "Retiro en local",
     image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=400&h=300&fit=crop",
-    featured: false,
+    isOpen: true,
+    promo: "⚡ Rápido",
   },
   {
     id: 4,
     name: "Boutique Eleganza",
     category: "Moda",
-    description: "Moda femenina exclusiva. Diseños únicos de creadores locales.",
+    description: "Moda femenina exclusiva de diseñadores locales",
     rating: 4.9,
     reviews: 67,
     location: "Zona Sur",
-    hours: "11:00 AM - 8:00 PM",
+    deliveryTime: "Envío 24h",
     image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=300&fit=crop",
-    featured: true,
+    isOpen: false,
+    promo: "✨ Nuevo",
   },
   {
     id: 5,
     name: "Café El Rincón",
-    category: "Gastronomía",
-    description: "El mejor café de especialidad del barrio. Ambiente acogedor para trabajar.",
+    category: "Cafetería",
+    description: "El mejor café de especialidad del barrio",
     rating: 4.8,
     reviews: 234,
     location: "Centro",
-    hours: "7:00 AM - 10:00 PM",
+    deliveryTime: "10-20 min",
     image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400&h=300&fit=crop",
-    featured: false,
+    isOpen: true,
+    promo: "☕ Top café",
   },
   {
     id: 6,
     name: "Estudio Yoga Luna",
-    category: "Salud y Bienestar",
-    description: "Clases de yoga para todos los niveles. Meditación y mindfulness.",
+    category: "Bienestar",
+    description: "Clases de yoga para todos los niveles",
     rating: 5.0,
     reviews: 45,
     location: "Barrio Norte",
-    hours: "6:00 AM - 9:00 PM",
+    deliveryTime: "Clases online",
     image: "https://images.unsplash.com/photo-1545389336-cf090694435e?w=400&h=300&fit=crop",
-    featured: true,
+    isOpen: true,
+    promo: "🧘 Trending",
   },
 ];
 
 const FeaturedBusinesses = () => {
+  const [favorites, setFavorites] = useState<number[]>([]);
+
+  const toggleFavorite = (id: number, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setFavorites(prev => 
+      prev.includes(id) ? prev.filter(f => f !== id) : [...prev, id]
+    );
+  };
+
   return (
-    <section className="bg-muted/30 py-20">
+    <section className="py-12 md:py-16 bg-muted/30">
       <div className="container">
         {/* Header */}
-        <div className="mb-12 flex items-end justify-between">
+        <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="font-display text-3xl font-bold text-foreground md:text-4xl">
-              Negocios Destacados
+            <h2 className="font-display text-2xl font-bold text-foreground md:text-3xl">
+              Los más populares
             </h2>
-            <p className="mt-4 text-lg text-muted-foreground">
-              Los favoritos de tu comunidad
+            <p className="mt-1 text-muted-foreground">
+              Favoritos de tu comunidad
             </p>
           </div>
-          <Button variant="ghost" className="hidden gap-2 md:flex">
-            Ver todos
-            <ArrowRight className="h-4 w-4" />
-          </Button>
+          <Link to="/directorio">
+            <Button variant="ghost" className="gap-2 text-primary">
+              Ver todos
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+          </Link>
         </div>
 
-        {/* Business Cards Grid */}
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Business Cards Grid - App Style */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {businesses.map((business, index) => (
-            <article
+            <Link
               key={business.id}
-              className="group overflow-hidden rounded-2xl bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-              style={{ animationDelay: `${index * 100}ms` }}
+              to={`/negocio/${business.id}`}
+              className="group overflow-hidden rounded-3xl bg-card border border-border shadow-app-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-app"
+              style={{ animationDelay: `${index * 50}ms` }}
             >
               {/* Image */}
-              <div className="relative aspect-[4/3] overflow-hidden">
+              <div className="relative aspect-[16/10] overflow-hidden">
                 <img
                   src={business.image}
                   alt={business.name}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                {business.featured && (
-                  <div className="absolute left-3 top-3 rounded-full bg-golden px-3 py-1 text-xs font-semibold text-accent-foreground">
-                    Destacado
-                  </div>
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                
+                {/* Status Badge */}
+                <div className="absolute top-3 left-3 flex gap-2">
+                  {business.promo && (
+                    <span className="rounded-full bg-background/90 backdrop-blur-sm px-3 py-1 text-xs font-semibold shadow-sm">
+                      {business.promo}
+                    </span>
+                  )}
+                </div>
+
+                {/* Open/Closed */}
+                <div className="absolute top-3 right-3">
+                  <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
+                    business.isOpen 
+                      ? "bg-secondary/90 text-secondary-foreground" 
+                      : "bg-muted/90 text-muted-foreground"
+                  }`}>
+                    {business.isOpen ? "Abierto" : "Cerrado"}
+                  </span>
+                </div>
+
+                {/* Favorite Button */}
+                <button
+                  onClick={(e) => toggleFavorite(business.id, e)}
+                  className="absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-background/90 backdrop-blur-sm shadow-sm transition-all hover:scale-110"
+                >
+                  <Heart 
+                    className={`h-4 w-4 transition-colors ${
+                      favorites.includes(business.id) 
+                        ? "fill-primary text-primary" 
+                        : "text-muted-foreground"
+                    }`} 
+                  />
+                </button>
               </div>
 
               {/* Content */}
-              <div className="p-5">
-                {/* Category */}
-                <span className="text-xs font-semibold uppercase tracking-wider text-primary">
-                  {business.category}
-                </span>
+              <div className="p-4">
+                {/* Category & Rating */}
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold text-primary uppercase tracking-wide">
+                    {business.category}
+                  </span>
+                  <div className="flex items-center gap-1">
+                    <Star className="h-4 w-4 fill-accent text-accent" />
+                    <span className="font-semibold text-foreground text-sm">
+                      {business.rating}
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      ({business.reviews})
+                    </span>
+                  </div>
+                </div>
 
                 {/* Name */}
-                <h3 className="mt-2 font-display text-xl font-bold text-foreground">
+                <h3 className="mt-2 font-display text-lg font-bold text-foreground group-hover:text-primary transition-colors">
                   {business.name}
                 </h3>
 
                 {/* Description */}
-                <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">
+                <p className="mt-1 text-sm text-muted-foreground line-clamp-1">
                   {business.description}
                 </p>
 
-                {/* Rating */}
-                <div className="mt-4 flex items-center gap-2">
-                  <div className="flex items-center gap-1">
-                    <Star className="h-4 w-4 fill-golden text-golden" />
-                    <span className="font-semibold text-foreground">
-                      {business.rating}
-                    </span>
-                  </div>
-                  <span className="text-sm text-muted-foreground">
-                    ({business.reviews} reseñas)
-                  </span>
-                </div>
-
                 {/* Meta Info */}
-                <div className="mt-4 flex flex-wrap gap-4 text-sm text-muted-foreground">
+                <div className="mt-3 flex items-center gap-3 text-xs text-muted-foreground">
                   <div className="flex items-center gap-1">
-                    <MapPin className="h-4 w-4 text-primary" />
+                    <MapPin className="h-3.5 w-3.5" />
                     <span>{business.location}</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <Clock className="h-4 w-4 text-primary" />
-                    <span>{business.hours}</span>
+                    <Clock className="h-3.5 w-3.5" />
+                    <span>{business.deliveryTime}</span>
                   </div>
                 </div>
               </div>
-            </article>
+            </Link>
           ))}
-        </div>
-
-        {/* Mobile CTA */}
-        <div className="mt-8 text-center md:hidden">
-          <Button variant="outline" className="gap-2">
-            Ver todos los negocios
-            <ArrowRight className="h-4 w-4" />
-          </Button>
         </div>
       </div>
     </section>

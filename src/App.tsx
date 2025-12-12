@@ -10,6 +10,11 @@ import Categorias from "./pages/Categorias";
 import Nosotros from "./pages/Nosotros";
 import Ingresar from "./pages/Ingresar";
 import RegistrarNegocio from "./pages/RegistrarNegocio";
+import Blog from "./pages/Blog";
+import FAQ from "./pages/FAQ";
+import Planes from "./pages/Planes";
+import Ayuda from "./pages/Ayuda";
+import Guia from "./pages/Guia";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +33,11 @@ const App = () => (
           <Route path="/nosotros" element={<Nosotros />} />
           <Route path="/ingresar" element={<Ingresar />} />
           <Route path="/registrar" element={<RegistrarNegocio />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/planes" element={<Planes />} />
+          <Route path="/ayuda" element={<Ayuda />} />
+          <Route path="/guia" element={<Guia />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
