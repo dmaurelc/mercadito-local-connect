@@ -1,124 +1,130 @@
 import { Link } from "react-router-dom";
-import { Store, Facebook, Instagram, Twitter, Mail, Phone, MapPin } from "lucide-react";
+import { MapPin, Instagram, Facebook, Twitter, Mail } from "lucide-react";
 
 const Footer = () => {
+  const footerLinks = {
+    explorar: [
+      { name: "Directorio", href: "/directorio" },
+      { name: "Categorías", href: "/categorias" },
+      { name: "Blog", href: "/blog" },
+      { name: "Mapa", href: "/mapa" },
+    ],
+    negocios: [
+      { name: "Registrar Negocio", href: "/registrar" },
+      { name: "Planes y Precios", href: "/planes" },
+      { name: "Guía de Usuario", href: "/guia" },
+      { name: "Casos de Éxito", href: "/casos" },
+    ],
+    soporte: [
+      { name: "Centro de Ayuda", href: "/ayuda" },
+      { name: "FAQ", href: "/faq" },
+      { name: "Contacto", href: "/contacto" },
+      { name: "Comunidad", href: "/comunidad" },
+    ],
+    legal: [
+      { name: "Términos de Uso", href: "/terminos" },
+      { name: "Privacidad", href: "/privacidad" },
+      { name: "Cookies", href: "/cookies" },
+    ],
+  };
+
   return (
     <footer className="border-t border-border bg-muted/30">
       <div className="container py-12 md:py-16">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
           {/* Brand */}
-          <div className="space-y-4">
+          <div className="lg:col-span-1">
             <Link to="/" className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary shadow-sm">
-                <Store className="h-5 w-5 text-primary-foreground" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-primary shadow-primary">
+                <MapPin className="h-5 w-5 text-primary-foreground" />
               </div>
-              <div className="flex flex-col">
-                <span className="font-display text-lg font-bold leading-tight text-foreground">
-                  Mercadito
-                </span>
-                <span className="text-xs font-medium text-muted-foreground">
-                  Vecinal
-                </span>
-              </div>
+              <span className="font-display text-xl font-bold text-foreground">
+                Mercadito
+              </span>
             </Link>
-            <p className="text-sm text-muted-foreground">
-              Conectando pequeños empresarios con su comunidad. Tu negocio local
-              merece ser visible.
+            <p className="mt-4 text-sm text-muted-foreground">
+              Conectando emprendedores locales con su comunidad.
             </p>
-            <div className="flex gap-3">
-              <a
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-muted text-muted-foreground transition-colors hover:bg-primary hover:text-primary-foreground"
-              >
-                <Facebook className="h-4 w-4" />
-              </a>
-              <a
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-muted text-muted-foreground transition-colors hover:bg-primary hover:text-primary-foreground"
-              >
-                <Instagram className="h-4 w-4" />
-              </a>
-              <a
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-muted text-muted-foreground transition-colors hover:bg-primary hover:text-primary-foreground"
-              >
-                <Twitter className="h-4 w-4" />
-              </a>
+            <div className="mt-6 flex gap-2">
+              {[Instagram, Facebook, Twitter].map((Icon, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  className="flex h-9 w-9 items-center justify-center rounded-xl bg-card border border-border text-muted-foreground transition-colors hover:bg-primary hover:text-primary-foreground hover:border-primary"
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div className="space-y-4">
-            <h4 className="font-display text-sm font-semibold text-foreground">
-              Enlaces Rápidos
-            </h4>
+          {/* Links */}
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">Explorar</h4>
             <nav className="flex flex-col gap-2">
-              {["Inicio", "Directorio", "Categorías", "Blog", "FAQ"].map((link) => (
+              {footerLinks.explorar.map((link) => (
                 <Link
-                  key={link}
-                  to="#"
-                  className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                  key={link.name}
+                  to={link.href}
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
-                  {link}
+                  {link.name}
                 </Link>
               ))}
             </nav>
           </div>
 
-          {/* For Businesses */}
-          <div className="space-y-4">
-            <h4 className="font-display text-sm font-semibold text-foreground">
-              Para Negocios
-            </h4>
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">Para Negocios</h4>
             <nav className="flex flex-col gap-2">
-              {[
-                "Registrar Negocio",
-                "Planes y Precios",
-                "Guía de Usuario",
-                "Centro de Ayuda",
-              ].map((link) => (
+              {footerLinks.negocios.map((link) => (
                 <Link
-                  key={link}
-                  to="#"
-                  className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                  key={link.name}
+                  to={link.href}
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
-                  {link}
+                  {link.name}
                 </Link>
               ))}
             </nav>
           </div>
 
-          {/* Contact */}
-          <div className="space-y-4">
-            <h4 className="font-display text-sm font-semibold text-foreground">
-              Contacto
-            </h4>
-            <div className="flex flex-col gap-3">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Mail className="h-4 w-4 text-primary" />
-                <span>hola@mercaditovecinal.com</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Phone className="h-4 w-4 text-primary" />
-                <span>+1 (555) 123-4567</span>
-              </div>
-              <div className="flex items-start gap-2 text-sm text-muted-foreground">
-                <MapPin className="h-4 w-4 shrink-0 text-primary" />
-                <span>Tu barrio, tu ciudad</span>
-              </div>
-            </div>
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">Soporte</h4>
+            <nav className="flex flex-col gap-2">
+              {footerLinks.soporte.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </nav>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">Legal</h4>
+            <nav className="flex flex-col gap-2">
+              {footerLinks.legal.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </nav>
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 text-sm text-muted-foreground md:flex-row">
-          <p>© 2024 Mercadito Vecinal. Todos los derechos reservados.</p>
-          <div className="flex gap-4">
-            <Link to="#" className="hover:text-primary">
-              Términos de Uso
-            </Link>
-            <Link to="#" className="hover:text-primary">
-              Privacidad
-            </Link>
+        <div className="mt-12 flex flex-col md:flex-row items-center justify-between gap-4 border-t border-border pt-8 text-sm text-muted-foreground">
+          <p>© 2024 Mercadito Vecinal. Hecho con ❤️ para tu comunidad.</p>
+          <div className="flex items-center gap-2">
+            <Mail className="h-4 w-4" />
+            <span>hola@mercaditovecinal.com</span>
           </div>
         </div>
       </div>
