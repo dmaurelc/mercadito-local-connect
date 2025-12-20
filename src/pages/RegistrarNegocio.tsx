@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useAuth } from "@/contexts/AuthContext";
 import { 
   Store, 
   User, 
@@ -16,7 +17,8 @@ import {
   MapPin,
   CheckCircle,
   ArrowRight,
-  ArrowLeft
+  ArrowLeft,
+  Loader2
 } from "lucide-react";
 
 const categories = [
@@ -33,6 +35,9 @@ const categories = [
 const RegistrarNegocio = () => {
   const [step, setStep] = useState(1);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { signUp, user } = useAuth();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     // Personal info
     nombre: "",
@@ -47,13 +52,27 @@ const RegistrarNegocio = () => {
     ciudad: "",
   });
 
+  useEffect(() => {
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Registration data:", formData);
+    setLoading(true);
+    
+    const { error } = await signUp(formData.email, formData.password, formData.nombre);
+    
+    if (!error) {
+      // User will be redirected by useEffect when user state updates
+    }
+    
+    setLoading(false);
   };
 
   const nextStep = () => setStep(step + 1);
@@ -170,6 +189,7 @@ const RegistrarNegocio = () => {
                       onChange={handleChange}
                       className="pl-10 pr-10"
                       required
+                      minLength={8}
                     />
                     <button
                       type="button"
@@ -311,9 +331,18 @@ const RegistrarNegocio = () => {
                     <ArrowLeft className="h-4 w-4" />
                     Atrás
                   </Button>
-                  <Button type="submit" className="flex-1 gap-2" size="lg">
-                    Crear mi cuenta
-                    <CheckCircle className="h-4 w-4" />
+                  <Button type="submit" className="flex-1 gap-2" size="lg" disabled={loading}>
+                    {loading ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        Creando cuenta...
+                      </>
+                    ) : (
+                      <>
+                        Crear mi cuenta
+                        <CheckCircle className="h-4 w-4" />
+                      </>
+                    )}
                   </Button>
                 </div>
               </>
