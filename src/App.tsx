@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/toaster";
+import SetupAdmin from "./pages/admin/SetupAdmin";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -45,6 +46,7 @@ const App = () => (
             <Route path="/planes" element={<Planes />} />
             <Route path="/ayuda" element={<Ayuda />} />
             <Route path="/guia" element={<Guia />} />
+            <Route path="/setup-admin" element={<SetupAdmin />} />
 
             {/* Admin Routes */}
             <Route
