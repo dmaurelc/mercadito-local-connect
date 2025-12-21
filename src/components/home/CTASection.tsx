@@ -1,5 +1,6 @@
+import { forwardRef } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle, Store, Zap, BarChart3 } from "lucide-react";
+import { ArrowRight, Store, Zap, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const features = [
@@ -8,9 +9,9 @@ const features = [
   { icon: BarChart3, text: "Estadísticas en tiempo real" },
 ];
 
-const CTASection = () => {
+const CTASection = forwardRef<HTMLElement>((_, ref) => {
   return (
-    <section className="py-16 md:py-20">
+    <section ref={ref} className="py-16 md:py-20">
       <div className="container">
         <div className="relative overflow-hidden rounded-[2rem] bg-gradient-primary p-8 md:p-12">
           {/* Background Pattern */}
@@ -68,6 +69,8 @@ const CTASection = () => {
       </div>
     </section>
   );
-};
+});
+
+CTASection.displayName = "CTASection";
 
 export default CTASection;

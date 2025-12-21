@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, forwardRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Store, Mail, Lock, Eye, EyeOff, Loader2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
-const Ingresar = () => {
+const Ingresar = forwardRef<HTMLDivElement>((_, ref) => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,7 +41,7 @@ const Ingresar = () => {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div ref={ref} className="flex min-h-screen">
       {/* Left Side - Form */}
       <div className="flex flex-1 flex-col justify-center px-6 py-12 lg:px-12">
         <div className="mx-auto w-full max-w-md">
@@ -160,6 +160,8 @@ const Ingresar = () => {
       </div>
     </div>
   );
-};
+});
+
+Ingresar.displayName = "Ingresar";
 
 export default Ingresar;
