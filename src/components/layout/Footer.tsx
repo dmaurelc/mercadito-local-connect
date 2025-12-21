@@ -1,7 +1,8 @@
+import { forwardRef } from "react";
 import { Link } from "react-router-dom";
 import { MapPin, Instagram, Facebook, Twitter, Mail } from "lucide-react";
 
-const Footer = () => {
+const Footer = forwardRef<HTMLElement>((_, ref) => {
   const footerLinks = {
     explorar: [
       { name: "Directorio", href: "/directorio" },
@@ -29,7 +30,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="border-t border-border bg-muted/30">
+    <footer ref={ref} className="border-t border-border bg-muted/30">
       <div className="container py-12 md:py-16">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
           {/* Brand */}
@@ -130,6 +131,8 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
+});
+
+Footer.displayName = "Footer";
 
 export default Footer;
