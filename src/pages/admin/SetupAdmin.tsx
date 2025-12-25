@@ -79,7 +79,19 @@ const SetupAdmin = () => {
           .update({ role: "super_admin" })
           .eq("user_id", authData.user.id);
 
-        if (roleError) throw roleError;
+        if (roleError) {
+          // Handle unique constraint violation (another admin was created in race condition)
+          if (roleError.code === '23505') {
+            toast({
+              variant: "destructive",
+              title: "Error",
+              description: "Un administrador ya ha sido creado. Por favor, inicia sesión.",
+            });
+            navigate("/ingresar");
+            return;
+          }
+          throw roleError;
+        }
 
         toast({
           title: "¡Administrador creado!",
